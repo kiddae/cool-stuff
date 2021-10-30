@@ -34,8 +34,9 @@ int main()
 
 
     // ========== Set up graphics ========== //
+    setlocale(LC_ALL, "");
     initscr();
-    cbreak();
+    nodelay(stdscr, true);
     noecho();
     keypad(stdscr, true);
 
@@ -54,8 +55,11 @@ int main()
     {
 
         // ========== Input ========== //
-        if (getch() == ' ')
+        int nInput = getch();
+        if (nInput == ' ')
             InitArray(vGrid, nHeight, nWidth);
+        if (nInput == 27)
+            break;
 
         // ========== Compute ========== //
         // Resize grid according to screen size.
@@ -93,11 +97,11 @@ int main()
         vGrid = vNext;
 
         // ========== Render ========== //
-        wchar_t cAlive;
-        wchar_t cDead;
+        char cAlive;
+        char cDead;
         // cAlive = 0x2588;
         // cDead = 0x2591;
-        cAlive = 0x2588;
+        cAlive = '\u2588';
         cDead = ' ';
         for (int y = 0; y < nHeight; y++)
         {
